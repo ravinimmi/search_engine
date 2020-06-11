@@ -89,6 +89,7 @@ CACHES = {
     'authors': {
         'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
         'LOCATION': 'authors',
+        'TIMEOUT': None
     }
 }
 
