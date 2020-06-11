@@ -1,14 +1,11 @@
 import json
+
 import requests
-
-
-from django.http.response import JsonResponse
 from django.conf import settings
-
-
+from django.http.response import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
-from search_util import SearchUtil
 
+from search_util import SearchUtil
 
 su = SearchUtil()
 su.load_data('search_app/data/data.json')
