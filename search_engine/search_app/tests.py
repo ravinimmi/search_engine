@@ -55,3 +55,11 @@ class SearchAPITest(TestCase):
         }
         response = client.post('/search-app/search/', data, content_type='application/json').json()
         self.assertEqual(response, expected_response)
+
+    def test_invalid_input(self):
+        client = Client()
+        data = {
+            'queries': ["is your problems", "achieve take book"]
+        }
+        response = client.post('/search-app/search/', data, content_type='application/json')
+        self.assertEquals(response.status_code, 400)
