@@ -47,7 +47,7 @@ class SearchUtil:
         '''
 
         keywords = query.split()
-        keywords = [self._clean_keyword(kw) for kw in keywords]
+        keywords = set([self._clean_keyword(kw) for kw in keywords])
 
         relevant_summary_indices = []
         for keyword in keywords:
