@@ -48,7 +48,9 @@ class SearchUtil:
             relevant_summary_indices.extend(matched_summary_indices)
 
         counter = Counter(relevant_summary_indices)
-        matched_indices_with_count = counter.most_common(k)
+        matched_indices_with_count = counter.items()
+        matched_indices_with_count = sorted(matched_indices_with_count, key=lambda x: (-x[1], x[0]))
+        matched_indices_with_count = matched_indices_with_count[:k]
         k_relevant_summary_indices = [item[0] for item in matched_indices_with_count]
 
         return [self.summaries[idx] for idx in k_relevant_summary_indices]
