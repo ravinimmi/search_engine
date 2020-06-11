@@ -1,10 +1,34 @@
-from django.test import TestCase, Client
+import json
+
+import httpretty
+from django.conf import settings
+from django.test import Client, TestCase
 
 
 class SearchAPITest(TestCase):
     maxDiff = None
 
+    @httpretty.activate
     def test_search(self):
+
+        def request_callback(request, uri, response_headers):
+            authors = {
+                0: 'Dan Harris',
+                7: 'Rosamund Zander and Benjamin Zander',
+                48: 'Mark Manson',
+                1: 'Grant Cardone',
+                12: 'Darren Hardy',
+                14: 'Hermann Simon'
+            }
+            author = authors[json.loads(request.body)['book_id']]
+            return [200, response_headers, json.dumps({'author': author})]
+
+        httpretty.register_uri(
+            httpretty.POST,
+            settings.AUTHOR_API_URL,
+            request_callback
+        )
+
         expected_response = [
             [
                 {
