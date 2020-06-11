@@ -51,7 +51,7 @@ class SearchUtil:
 
         relevant_summary_indices = []
         for keyword in keywords:
-            matched_summary_indices = list(self.inverted_index[keyword])
+            matched_summary_indices = list(self.inverted_index.get(keyword, set()))
             relevant_summary_indices.extend(matched_summary_indices)
 
         counter = Counter(relevant_summary_indices)
