@@ -118,3 +118,5 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+
+AUTHOR_API_URL = 'https://ie4djxzt8j.execute-api.eu-west-1.amazonaws.com/coding'
