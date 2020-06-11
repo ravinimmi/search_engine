@@ -45,3 +45,9 @@ class TestSearchUtilQuery(unittest.TestCase):
             }
         ]
         self.assertEqual(self.su.search(query, k), results)
+
+    def test_non_existing_keywords(self):
+        query = 'spot silly'
+        k = 3
+        results = []
+        self.assertEqual(self.su.search(query, k), results)
