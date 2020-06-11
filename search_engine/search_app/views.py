@@ -2,6 +2,7 @@ import json
 
 import requests
 from django.conf import settings
+from django.core.cache import caches
 from django.http.response import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 
@@ -35,6 +36,13 @@ def search(request):
 
 
 def get_author(book_id):
+    cache = caches['authors']
+    author = cache.get(book_id)
+    if author is not None:
+        return author
+
     data = {'book_id': book_id}
     r = requests.post(settings.AUTHOR_API_URL, data=json.dumps(data))
-    return r.json()['author']
+    author = r.json()['author']
+    cache.set(book_id, author)
+    return author
