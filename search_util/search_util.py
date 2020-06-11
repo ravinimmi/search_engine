@@ -1,4 +1,5 @@
 import json
+import string
 from collections import defaultdict
 from collections import Counter
 
@@ -14,6 +15,9 @@ class SearchUtil:
             data = json.load(f)
         self.summaries = data['summaries']
 
+    def _clean_keyword(self, keyword):
+        return keyword.lower().strip(string.punctuation)
+
     def generate_inverted_indices(self):
         '''
         Generates inverted index for each summary. index is a dictionary
@@ -26,7 +30,9 @@ class SearchUtil:
         '''
         for idx, summary in enumerate(self.summaries):
             for keyword in summary['summary'].split():
-                self.inverted_index[keyword].add(idx)
+                clean_keyword = self._clean_keyword(keyword)
+                if clean_keyword != '':
+                    self.inverted_index[clean_keyword].add(idx)
 
     def search(self, query, k):
         '''
@@ -41,6 +47,7 @@ class SearchUtil:
         '''
 
         keywords = query.split()
+        keywords = [self._clean_keyword(kw) for kw in keywords]
 
         relevant_summary_indices = []
         for keyword in keywords:
