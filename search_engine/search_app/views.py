@@ -15,6 +15,9 @@ su.generate_inverted_indices()
 
 @csrf_exempt
 def search(request):
+    if request.method != 'POST':
+        return JsonResponse({'message': 'Only POST method allowed.'}, status=405)
+
     data = json.loads(request.body)
     queries = data.get('queries')
     k = data.get('K')
