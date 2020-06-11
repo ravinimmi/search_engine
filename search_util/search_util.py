@@ -5,8 +5,8 @@ from collections import Counter
 
 class SearchUtil:
 
-    def __init__(self):
-        self.summaries = []
+    def __init__(self, summaries=[]):
+        self.summaries = summaries
         self.inverted_index = defaultdict(set)
 
     def load_data(self, file_path):
